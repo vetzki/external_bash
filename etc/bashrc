@@ -29,22 +29,30 @@ use_color=false
 export HOME=/sdcard
 export TERM=xterm
 
+Ip=`ip route | grep dev | awk '{print $9}'`
+
 # enable colorful terminal
 if [[ ${EUID} == 0 ]] ; then
-	PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
+	PS1='\[\033[01;33m\]$Ip\[\033[01;34m\] \W \$\[\033[00m\] '
 else
-	PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+	PS1='\[\033[01;33m\]$Ip\[\033[01;32m\] \w \$\[\033[00m\] '
 fi
 
 # Set up a ton of aliases to cover toolbox with the nice busybox
 # equivalents of its commands
-for i in cat chmod chown df insmod ln lsmod mkdir mount mv rm rmdir rmmod umount; do
+for i in cat chmod chown df insmod ln lsmod mkdir mount mv ps rm rmdir rmmod top umount; do
 	eval alias ${i}=\"busybox ${i}\"
 done
 unset i
 alias ls='busybox ls --color=auto'
-alias sysro='mount -o remount,ro /system'
-alias sysrw='mount -o remount,rw /system'
+alias sysro='/system/xbin/su -c "mount -ro remount /system"'
+alias sysrw='/system/xbin/su -c "mount -wo remount /system"'
+alias su='/system/xbin/su -s /system/xbin/bash'
+alias bb='busybox'
+alias qq='exit'
+alias dmesg='busybox dmesg -C'
+alias mi='cat /proc/meminfo'
+alias grep='grep --color=always'
 
 # Try to keep environment pollution down, EPA loves us.
 unset use_color safe_term match_lhs
