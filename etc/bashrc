@@ -29,13 +29,11 @@ use_color=false
 export HOME=/sdcard
 export TERM=xterm
 
-Ip=`ip route | grep dev | awk '{print $9}'`
-
 # enable colorful terminal
 if [[ ${EUID} == 0 ]] ; then
-	PS1='\[\033[01;33m\]$Ip\[\033[01;34m\] \W \$\[\033[00m\] '
+	PS1='\[\033[01;34m\] \W \$\[\033[00m\] '
 else
-	PS1='\[\033[01;33m\]$Ip\[\033[01;32m\] \w \$\[\033[00m\] '
+	PS1='\[\033[01;32m\] \w \$\[\033[00m\] '
 fi
 
 # Set up a ton of aliases to cover toolbox with the nice busybox
