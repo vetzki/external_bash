@@ -51,6 +51,10 @@ alias qq='exit'
 alias dmesg='busybox dmesg -C'
 alias mi='cat /proc/meminfo'
 alias grep='grep --color=always'
+alias RN='/system/xbin/su -c reboot'
+alias RR='/system/xbin/su -c "reboot recovery"'
+alias currgb='cat /sys/devices/platform/kcal_ctrl.0/kcal'
+alias curcol='for i in $(ls /sys/dev/char/10:7|grep -Ev "dev|uevent|version|subsystem|power");do echo "$i:";cat /sys/dev/char/10:7/$i;done'
 
 # Try to keep environment pollution down, EPA loves us.
 unset use_color safe_term match_lhs
